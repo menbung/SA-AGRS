@@ -13,10 +13,15 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 public class ServerAdapter implements ServerTarget{
+	private static ServerAdapter instance = new ServerAdapter();//싱글톤 사용을 위한 변수
 	private Firestore db;
 	
-	public ServerAdapter() {
+	private ServerAdapter() {//외부에서 추가 생성하는걸 막기위한 private
 		initialize();
+	}
+	
+	public static ServerAdapter getInstance() {//싱글톤을 위한 인스턴스 반환 함수
+		return instance;
 	}
 	
 	public void initialize() {
