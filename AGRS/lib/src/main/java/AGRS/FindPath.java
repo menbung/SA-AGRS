@@ -16,14 +16,14 @@ public class FindPath implements FindPathStrategy {
 	
 	private ArrayList<A_Data> OpenList = new ArrayList<A_Data>();
 	private ArrayList<A_Data> CloseList = new ArrayList<A_Data>();
-	private ArrayList<Point> Path = new ArrayList<>(); //¸¶Áö¸·¿¡ °æ·Î¸¦ ÀúÀåÇÒ °÷ÀÌ´Ù.
+	private ArrayList<Point> Path = new ArrayList<>(); //ë§ˆì§€ë§‰ì— ê²½ë¡œë¥¼ ì €ì¥í•  ê³³ì´ë‹¤.
 	
     public FindPath() {
     	
     }
 
     public ArrayList<Point> findPath(int gate_num) {
-    	// Map ºÒ·¯¿À±â
+    	// Map ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
     	Map airportMap = Map.getInstance();
     	
     	int startx = airportMap.getRobot().getX();
@@ -33,12 +33,12 @@ public class FindPath implements FindPathStrategy {
     	int endy = airportMap.getGateLocation(gate_num - 1).getY();
     	
     	int nowIndex = 0;
-    	CloseList.add(new A_Data(startx, starty, -1, 0, 0)); //½ÃÀÛÁöÁ¡À» ¹Ù·Î Å½»öÇÒ ¼ö ÀÖµµ·Ï CloseList¿¡ ¹Ì¸® ³Ö¾îÁØ´Ù.
-    	while (CloseList.get(nowIndex).x != endx || CloseList.get(nowIndex).y != endy) { // ¸ñÀûÁö¿¡ µµÂøÇÒ¶§±îÁö ¹İº¹ÇÑ´Ù.
-    		for (int way = 0; way < 4; way++) { // »óÇÏÁÂ¿ì ¼ø¼­
+    	CloseList.add(new A_Data(startx, starty, -1, 0, 0)); //ì‹œì‘ì§€ì ì„ ë°”ë¡œ íƒìƒ‰í•  ìˆ˜ ìˆë„ë¡ CloseListì— ë¯¸ë¦¬ ë„£ì–´ì¤€ë‹¤.
+    	while (CloseList.get(nowIndex).x != endx || CloseList.get(nowIndex).y != endy) { // ëª©ì ì§€ì— ë„ì°©í• ë•Œê¹Œì§€ ë°˜ë³µí•œë‹¤.
+    		for (int way = 0; way < 4; way++) { // ìƒí•˜ì¢Œìš° ìˆœì„œ
     			int nowx = CloseList.get(nowIndex).x;
     			int nowy = CloseList.get(nowIndex).y;
-    			boolean flag = false;	// ÇØ´ç À§Ä¡°¡ ¿­¸°, ´İÈù¸®½ºÆ®Áß¿¡ ÀÖ´Â°¡ È®ÀÎÇÒ¶§ ¾´´Ù.
+    			boolean flag = false;	// í•´ë‹¹ ìœ„ì¹˜ê°€ ì—´ë¦°, ë‹«íŒë¦¬ìŠ¤íŠ¸ì¤‘ì— ìˆëŠ”ê°€ í™•ì¸í• ë•Œ ì“´ë‹¤.
     			if (way == 0) nowy++;
     			else if (way == 1) nowy--;
     			else if (way == 2) nowx--;
@@ -50,7 +50,7 @@ public class FindPath implements FindPathStrategy {
     				}
     			}
     			
-    			for (int i = 0; i < OpenList.size(); i++) { // ¿­¸°¸®½ºÆ®¿¡ ÀÌ¹Ì Á¸ÀçÇÑ´Ù¸é
+    			for (int i = 0; i < OpenList.size(); i++) { // ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì— ì´ë¯¸ ì¡´ì¬í•œë‹¤ë©´
     				if (OpenList.get(i).x == nowx && OpenList.get(i).y == nowy) {
     					flag = true;
     					 if (OpenList.get(i).G > CloseList.get(nowIndex).G + 1) {
@@ -59,12 +59,12 @@ public class FindPath implements FindPathStrategy {
     				}
     			}
     			
-    			if (flag == false) { // ¿­¸°, ´İÈù¸®½ºÆ®¿¡ ¾ø´Ù¸é ¿­¸°¸®½ºÆ®¿¡ »õ·Î Ãß°¡ÇØÁÜ
+    			if (flag == false) { // ì—´ë¦°, ë‹«íŒë¦¬ìŠ¤íŠ¸ì— ì—†ë‹¤ë©´ ì—´ë¦°ë¦¬ìŠ¤íŠ¸ì— ìƒˆë¡œ ì¶”ê°€í•´ì¤Œ
     				OpenList.add(new A_Data(nowx, nowy, nowIndex, CloseList.get(nowIndex).G + 1,Math.abs(endx - nowx) + Math.abs(endy - nowy)));
     			}
     		}
     		
-    		if (OpenList.size() != 0) { // ¿ÀÇÂ¸®½ºÆ®¿¡¼­ ±â´ë°Å¸®°¡ Á¦ÀÏ ÀÛÀº°ÍÀ» °ñ¶ó Å½»öÀ§Ä¡·Î ¼³Á¤
+    		if (OpenList.size() != 0) { // ì˜¤í”ˆë¦¬ìŠ¤íŠ¸ì—ì„œ ê¸°ëŒ€ê±°ë¦¬ê°€ ì œì¼ ì‘ì€ê²ƒì„ ê³¨ë¼ íƒìƒ‰ìœ„ì¹˜ë¡œ ì„¤ì •
     			int Ftemp = OpenList.get(0).F;
     			int Indextemp = 0;
     			for (int i = 0; i < OpenList.size(); i++) {
@@ -72,31 +72,31 @@ public class FindPath implements FindPathStrategy {
     					Ftemp = OpenList.get(i).F;
     					Indextemp = i;
     				}
-    				else if (OpenList.get(i).F == Ftemp) { // ¸¸ÀÏ F°ªÀÌ µ¿ÀÏÇÏ´Ù¸é H°ªÀÌ ÀÛÀº°ÍÀ» ÅÃÇÑ´Ù.
+    				else if (OpenList.get(i).F == Ftemp) { // ë§Œì¼ Fê°’ì´ ë™ì¼í•˜ë‹¤ë©´ Hê°’ì´ ì‘ì€ê²ƒì„ íƒí•œë‹¤.
     					 if (OpenList.get(i).H < OpenList.get(Indextemp).H) {
     						 Indextemp = i;
     					 }
     				}
     			}
     			CloseList.add(OpenList.get(Indextemp));
-    			OpenList.remove(Indextemp); //CloseList¿¡ Å½»öÇÒ À§Ä¡¸¦ ³Ö¾îÁÖ°í OpenList¿¡¼­ Áö¿î´Ù.
+    			OpenList.remove(Indextemp);  //CloseListì— íƒìƒ‰í•  ìœ„ì¹˜ë¥¼ ë„£ì–´ì£¼ê³  OpenListì—ì„œ ì§€ìš´ë‹¤.
     			nowIndex++;
     			
-    		}else {// OpenList°¡ ºñ¾ú´Ù¸é °æ·Î ¾øÀ½
+    		}else {// OpenListê°€ ë¹„ì—ˆë‹¤ë©´ ê²½ë¡œ ì—†ìŒ
     			System.out.println("Location Error");
     			break;
     		}
     		
     	}
     	
-    	while (nowIndex != -1) { // µµÂøÁöÁ¡ºÎÅÍ ¿ª¼øÀ¸·Î µÇÂ¤¾î°£´Ù
+    	while (nowIndex != -1) { // ë„ì°©ì§€ì ë¶€í„° ì—­ìˆœìœ¼ë¡œ ë˜ì§šì–´ê°„ë‹¤
     		Point path_point = new Point(CloseList.get(nowIndex).x, CloseList.get(nowIndex).y);
     		Path.add(path_point);// + " " + CloseList.get(nowIndex).y);
     		nowIndex = CloseList.get(nowIndex).p_index;
     	}
     	
-//    	while (Path.size() != 0) { // µÇÂ¤¾î°£ °æ·Î¸¦ ´Ù½Ã ¿ø·¡´ë·Î Ãâ·ÂÇÑ´Ù.
-//    		// ¿©±â¼­ Handler¸¦ ½á¼­ ³Ñ¾î°¥°Í. GUIÃ³¸® ÇÊ¿ä.
+//    	while (Path.size() != 0) { // ë˜ì§šì–´ê°„ ê²½ë¡œë¥¼ ë‹¤ì‹œ ì›ë˜ëŒ€ë¡œ ì¶œë ¥í•œë‹¤.
+//    		// ì—¬ê¸°ì„œ Handlerë¥¼ ì¨ì„œ ë„˜ì–´ê°ˆê²ƒ. GUIì²˜ë¦¬ í•„ìš”.
 //    		
 //    		System.out.println(Path.get(Path.size() - 1)[0] + " " + Path.get(Path.size() - 1)[1]);
 //    		Path.remove(Path.size() - 1);
