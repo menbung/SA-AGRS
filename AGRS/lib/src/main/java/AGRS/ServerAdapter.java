@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.firebase.FirebaseApp;
@@ -69,19 +68,7 @@ public class ServerAdapter implements ServerTarget{
 		return info_list;
 	}
 	
-	public int[] mapReq(){
-		int[] map_size = new int[2];
-		try {
-			DocumentSnapshot document = db.collection("airport_map").document("1f_map").get().get();
-			map_size[0] = document.getLong("map_width").intValue();
-			map_size[1] = document.getLong("map_height").intValue();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return map_size;
+	public ArrayList<ArrayList<Integer>> mapReq(){
+		return null;
 	}
 }
