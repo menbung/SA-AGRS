@@ -17,42 +17,43 @@ public class Map {
 	private int gateNum;
 	private Point robot;
 	private ArrayList<Point> gate_location;
-	
+	private ServerTarget server;
 	
     /**
      * Default constructor
      */
     private Map() {
+    	server = ServerAdapter.getInstance();
     	gate_location=new ArrayList<>();
     	gateNum=8;
-    	mapSizeW=25;
-    	mapSizeH=13;
+    	
+    	int[] map_size = server.mapReq();
+    	mapSizeW=map_size[0];
+    	mapSizeH=map_size[1];
     	robot = new Point(6,2);
     	
-//    	// 나중에 DB에서 맵불러오기 한다면 이거 반복문 사용해서 이용.
-//    	ArrayList mapArray = new ArrayList();
-//    	mapArray.add("1");
-//    	mapArray.add("0");
-//    	mapArray.add("0");
     	
-//    	Vector<Integer> vector=new Vector<Integer>(mapArray);
-    	
-    	//Map(0~12, 0~6 크기) 표시 방법 0 비어있음 1 장애물 
-    	//row = 세로 = height , col = 가로 = width
-    	
-    	Vector<Integer> mapW=new Vector<Integer>(Arrays.asList(
-    			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-    			));
+//    	Vector<Integer> mapW=new Vector<Integer>(Arrays.asList(
+//    			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+//    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//    			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+//    			));
     	
     	map=new Vector<Vector<Integer>>();
-    	for(int row=0;row<mapW.size()/mapSizeW;row++)
-    	    map.add(new Vector<Integer>(mapW.subList(row*mapSizeW, (row+1)*mapSizeW)));
+    	for(int row=0; row<mapSizeW; row++) {
+    		Vector<Integer> row_vec = new Vector<Integer>();
+    		for(int col=0; col<mapSizeH; col++) {
+    			if(row == 0 || row == mapSizeW-1 || col == 0 || col == mapSizeH-1)
+    				row_vec.add(1);
+    			else
+    				row_vec.add(0);
+    		}
+    		map.add(row_vec);
+    	}
     	
     	
     	gate_location.add(new Point(3,0));	//1번 게이트
