@@ -91,10 +91,8 @@ public class GuidanceGUI extends JFrame {
 		Robot.addMouseListener(new MouseAdapter() {		//임시 테스트용 R 클릭했을때 리페인트 되는지 확인용.
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Point p1 = new Point();
-				p1.setPoint(3, 4);
-				Point p2 = new Point();
-				p2.setPoint(3, 3);
+				Point p1 = new Point(3, 4);
+				Point p2 = new Point(3, 3);
 				makeRouteY(p1, p2);
 				System.out.println(RouteList.get(0).getX());
 				printRoute();
