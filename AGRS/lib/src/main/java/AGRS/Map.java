@@ -9,22 +9,24 @@ import java.awt.*;
  * 
  */
 public class Map {
+	public static String Map;
 	private int mapSizeW;
 	private int mapSizeH;
-	private Vector<Vector<Integer>> map = null;
+	private static Vector<Vector<Integer>> map;
 	private int gateNum;
-	private Point robot;
-	private ArrayList<Point> gate_location;
+	private static Point robot= new Point();
+	private static ArrayList<Point> gate_location;
 	
 	
     /**
      * Default constructor
      */
     public Map() {
+    	gate_location=new ArrayList<>();
     	gateNum=10;
-    	mapSizeW=24;
-    	mapSizeH=12;
-//    	robot.setLocation(6,2);
+    	mapSizeW=25;
+    	mapSizeH=13;
+    	robot.setPoint(6,2);
     	
 //    	// 나중에 DB에서 맵불러오기 한다면 이거 반복문 사용해서 이용.
 //    	ArrayList mapArray = new ArrayList();
@@ -40,10 +42,10 @@ public class Map {
     	Vector<Integer> mapW=new Vector<Integer>(Arrays.asList(
     			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-    			1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
-    			1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+    			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
     			));
     	
@@ -67,10 +69,10 @@ public class Map {
     }
 
 
-    public Vector<Vector<Integer>> getMap() {
+    public static Vector<Vector<Integer>> getMap() {
         // TODO implement here
     	
-        return map;
+		return map;
     }
     
     public int getWidth() {
@@ -90,14 +92,25 @@ public class Map {
 		return map.get(row).get(col);
 		
 	}
+	
+	public static Point getGateLocation(int gate_num) {
+		return gate_location.get(gate_num);
+	}
+	
+	
+	public static Point getRobot() {
+		return robot;
+	}
     
     
 	public Point convertPoint(int row, int col) {
-		Point p1=null;
-//		p1.setLocation(row,col);
+		Point p1=new Point();
+		p1.setPoint(row,col);
 		
 		return p1;
 	}
 	
 	
 }
+
+

@@ -1,15 +1,8 @@
 package AGRS;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
 
 public class GuidanceGUI extends JFrame {
 
@@ -20,6 +13,18 @@ public class GuidanceGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GuidanceGUI frame = new GuidanceGUI(2);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -46,20 +51,43 @@ public class GuidanceGUI extends JFrame {
 		
 		
 		// ¸ÊÃâ·ÂºÎ
-		JPanel mapPanel = new JPanel();
-		mapPanel.setBorder(new EmptyBorder(8, 0, 0, 0));
-		FlowLayout flowLayout = (FlowLayout) mapPanel.getLayout();
-		contentPane.add(mapPanel, BorderLayout.CENTER);
+//		JPanel mapPanel = new JPanel();
+//		mapPanel.setBorder(new EmptyBorder(8, 0, 0, 0));
+////		mapPanel.setLayout(null);
+//		contentPane.add(mapPanel, BorderLayout.CENTER);
+		
+		
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		contentPane.add(layeredPane, BorderLayout.CENTER);
+		layeredPane.setLayout(null);
+		
+		JButton btnNewButton = new JButton("G");
+		btnNewButton.setBackground(Color.GREEN);
+		btnNewButton.setBounds(-12, -12, 48, 48);
+		layeredPane.add(btnNewButton);
+		
 		
 		tableMap = new JTable(6,12);
+		tableMap.setBounds(12, 12, 912, 432);
 		tableMap.setRowHeight(72);
-
-		mapPanel.add(tableMap);
+		layeredPane.add(tableMap);
+		
+		JButton Robot = new JButton("R");
+		Robot.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		layeredPane.setLayer(Robot, 1);
+		Robot.setBackground(Color.RED);
+		Robot.setBounds(672,204,48,48);
+		layeredPane.add(Robot);
 		
 		//±æÃ£±â ½Ã¹Ä·¹ÀÌ¼ÇºÎ
 		
 		
 		
 	}
-
+	class tableMap extends JPanel{
+		public void paintComponent(Graphics g){
+			g.drawOval(120, 70, 60, 60);
+		}
+	}
 }
