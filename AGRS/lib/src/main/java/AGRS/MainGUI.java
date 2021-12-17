@@ -52,21 +52,16 @@ public class MainGUI extends JFrame {
 		gbl_btnPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		btnPanel.setLayout(gbl_btnPanel);
 		
-		JButton btn1 = new JButton("\uD56D\uACF5\uD3B8 \uC815\uBCF4\uC548\uB0B4");
+		JButton btn1 = new JButton("\uD56D\uACF5\uD3B8 \uC815\uBCF4\uC548\uB0B4");//항공편 정보 버튼
 		btn1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//첫번째 버튼
-				FlightinfoGUI flightinfogui = new FlightinfoGUI(false);
-				flightinfogui.setVisible(true);
+				new FlightInfoHandler(false);
 				setVisible(false);
 			}
 		});
 		btn1.setFont(new Font("굴림", Font.BOLD, 20));
-		btn1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+
 		GridBagConstraints gbc_btn1 = new GridBagConstraints();
 		gbc_btn1.fill = GridBagConstraints.BOTH;
 		gbc_btn1.insets = new Insets(10, 360, 10, 360);
@@ -74,13 +69,11 @@ public class MainGUI extends JFrame {
 		gbc_btn1.gridy = 0;
 		btnPanel.add(btn1, gbc_btn1);
 		
-		JButton btn2 = new JButton("\uACF5\uD56D \uAE38 \uC548\uB0B4");
+		JButton btn2 = new JButton("\uACF5\uD56D \uAE38 \uC548\uB0B4");//길 안내 버튼
 		btn2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//두번째 버튼
-				FlightinfoGUI flightinfogui = new FlightinfoGUI(true);
-				flightinfogui.setVisible(true);
+				new FlightInfoHandler(true);
 				setVisible(false);
 			}
 		});

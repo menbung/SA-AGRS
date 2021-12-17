@@ -1,6 +1,6 @@
 package AGRS;
 
-public class FlightInfoObject {
+public class FlightInfoObject implements Comparable<FlightInfoObject>{
 	private String departure_time;
 	private String arrive_time;
 	private String airline;
@@ -84,5 +84,16 @@ public class FlightInfoObject {
 
 	public void setGate_num(int gate_num) {
 		this.gate_num = gate_num;
+	}
+
+	@Override
+	public int compareTo(FlightInfoObject o) {
+		// TODO Auto-generated method stub
+		if(this.departure_time.equals("null")) {
+			return this.arrive_time.compareTo(o.getArrive_time());
+		}
+		else {
+			return this.departure_time.compareTo(o.getDeparture_time());
+		}
 	}
 }

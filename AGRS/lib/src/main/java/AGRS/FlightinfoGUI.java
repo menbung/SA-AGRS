@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.JScrollPane;
 
 public class FlightinfoGUI extends JFrame {
@@ -24,16 +26,15 @@ public class FlightinfoGUI extends JFrame {
 	private JPanel contentPane;
 	private JTable departureTable;	// 출발항공표
 	private JTable arrivalTable;	// 도착항공표
-	private boolean is_Departure;	// 지금 출력중인 화면이 출발표인가 도착표인가
+	private JButton departureBtn;	// 출발리스트 보는 버튼
+	private JButton arrivalBtn;		// 도착리스트 보는 버튼
+	private JButton menuBtn;		// 메뉴화면으로 가는 버튼
+	private DefaultTableModel departure_model;	//출발리스트
+	private DefaultTableModel arrive_model;		//도착리스트
+	private JPanel tables;			//리스트 출력 패널
+	private CardLayout card;		//패널 관리
 	
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 */
-	public FlightinfoGUI(boolean guiflag) {
+	public FlightinfoGUI() {
 		//패널 생성 및 디자인 관련
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 960, 540);
@@ -55,93 +56,26 @@ public class FlightinfoGUI extends JFrame {
 		contentPane.add(tablePanel, BorderLayout.CENTER);
 		tablePanel.setLayout(new BorderLayout(0, 0));
 		
-		
 		//테이블
 
-		JPanel tables = new JPanel();
+		tables = new JPanel();
 		tablePanel.add(tables, BorderLayout.CENTER);
-		tables.setLayout(new CardLayout(0, 0));
+		card = new CardLayout();
+		tables.setLayout(card);
 		
 		
 		// 테이블 생성 출력부
-		String[] colTitle= new String[]{"시간", "출발지", "도착지", "항공사"};		// 추가해줄것
-		DefaultTableModel model = new DefaultTableModel(colTitle,0);
-		departureTable = new JTable(model);
-
-//		departureTable.setCellSelectionEnabled(true);
-		tables.add(departureTable);
-		arrivalTable = new JTable();
-		arrivalTable.setEnabled(false);
-		tables.add(arrivalTable);
+		String[] dep_colTitle= new String[]{"출발시간", "도착지", "항공편", "항공사", "게이트"};//출력값 종류
+		departure_model = new DefaultTableModel(dep_colTitle, 0);
+		departureTable = new JTable(departure_model);
+		JScrollPane dep_scroll = new JScrollPane(departureTable);
+		tables.add("dep", dep_scroll);
 		
-		
-		
-		
-//#해야할것# 테이블이 출발과 도착으로 나뉘어 있다고 할때, 각각 테이블에 FlightInfo ArrayList를 넣어줘야함.
-//		FlightInfo flightinfo = new FlightInfo();
-//		String[] data = new String[4];
-//		data[0] = flightinfo.get();		// 이거로 다 데이타값 채우기
-//		
-//		departureTable.addRow(data);
-//		
-//		if() {
-//			// 출발행 departureTable
-//			String[] data = new String[4];		// 이런식으로 표에 추가.
-//			data[0]="1";
-//			data[1]="1";
-//			data[2]="1";
-//			data[3]="1";
-//			model.addRow(data);
-//			
-//		}else if() {
-//			// 도착행 arrivialTable
-//			
-//			
-//		}else {
-//			System.out.println("error data in loading flight table");
-//		}
-		
-		
-
-		
-		
-		//테이블 클릭시 (길안내의 경우)
-
-		if(guiflag==true) {
-			departureTable.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int index=departureTable.getSelectedRow();
-					
-					/* 대충 리스트에서 해당 index에 해당하는 게이트를 가져오는 코드가 들어가야함*/
-					
-					//해당 아래는 임시
-					int gateNum=8;
-					
-					GuidanceGUI guidancegui = new GuidanceGUI(gateNum);
-					guidancegui.setVisible(true);
-					setVisible(false);
-				}
-			});
-			
-			arrivalTable.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int index=arrivalTable.getSelectedRow();
-					
-					/* 대충 리스트에서 해당 인덱스에 해당하는 게이트를 가져오는 코드가 들어가야함*/
-					
-					//해당 아래는 임시
-					int gateNum=3;
-					
-					GuidanceGUI guidancegui = new GuidanceGUI(gateNum);
-					guidancegui.setVisible(true);
-					setVisible(false);
-
-				}
-			});
-			
-		}
+		String[] ar_colTitle= new String[]{"도착시간", "출발지", "항공편", "항공사", "입국장 출구"};//출력값 종류
+		arrive_model = new DefaultTableModel(ar_colTitle, 0);
+		arrivalTable = new JTable(arrive_model);
+		JScrollPane ar_scroll = new JScrollPane(arrivalTable);
+		tables.add("ar", ar_scroll);
 		
 		
 		// 버튼부
@@ -152,31 +86,11 @@ public class FlightinfoGUI extends JFrame {
 		flowLayout.setHgap(0);
 		tablePanel.add(tableBtns, BorderLayout.NORTH);
 		
-		JButton departureBtn = new JButton("\uCD9C\uBC1C");	//출발표 보는 버튼
-		departureBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {	//출발표 보는 버튼은
-				if(is_Departure==false) {				//출발표 보여주는 상태가 false일때
-					arrivalTable.setVisible(false);		//도착표를 내리고
-					departureTable.setVisible(true);	//출발표를 보여준다.
-					is_Departure=true;
-				}
-			}
-		});
+		departureBtn = new JButton("\uCD9C\uBC1C");	//출발표 보는 버튼
 		departureBtn.setFont(new Font("굴림", Font.ITALIC, 16));
 		tableBtns.add(departureBtn);
 		
-		JButton arrivalBtn = new JButton("\uB3C4\uCC29");	//도착표 보는 버튼
-		arrivalBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {		//도착표를 보는 버튼은
-				if(is_Departure==true) {						//출발표를 보여주는 상태가 true일때,
-					departureTable.setVisible(false);		//출발표를 내리고
-					arrivalTable.setVisible(true);			//도착표를 보여준다.
-					is_Departure=false;						//그리고 출발표인가요?는 false로 한다.
-				}
-			}
-		});
+		arrivalBtn = new JButton("\uB3C4\uCC29");	//도착표 보는 버튼
 		arrivalBtn.setFont(new Font("굴림", Font.ITALIC, 16));
 		tableBtns.add(arrivalBtn);
 		
@@ -184,19 +98,64 @@ public class FlightinfoGUI extends JFrame {
 		JPanel btnPanel = new JPanel();
 		contentPane.add(btnPanel, BorderLayout.SOUTH);
 		
-		JButton menuBtn = new JButton("MENU");
-		menuBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//menu버튼 클릭시
-				MainGUI maingui = new MainGUI();
-				maingui.setVisible(true);
-				setVisible(false);
-			}
-		});
+		menuBtn = new JButton("MENU");				//메뉴화면으로 돌아가는 버튼
 		menuBtn.setFont(new Font("굴림", Font.BOLD, 20));
 		btnPanel.add(menuBtn);
 	}
-	
 
+	public void updateDeparture(ArrayList<FlightInfoObject> data) {
+		String[] row = new String[5];
+		for(FlightInfoObject info : data) {
+			row[0] = info.getDeparture_time();
+			row[1] = info.getDestination();
+			row[2] = info.getFlight_num();
+			row[3] = info.getAirline();
+			row[4] = Integer.toString(info.getGate_num());
+			departure_model.addRow(row);
+		}
+	}
+	
+	public void updateArrive(ArrayList<FlightInfoObject> data) {
+		String[] row = new String[5];
+		for(FlightInfoObject info : data) {
+			row[0] = info.getArrive_time();
+			row[1] = info.getStarting_point();
+			row[2] = info.getFlight_num();
+			row[3] = info.getAirline();
+			row[4] = Integer.toString(info.getGate_num());
+			arrive_model.addRow(row);
+		}
+	}
+
+	public void showFlightList(int code) {
+		switch(code) {
+		case 1:
+			card.show(tables, "dep");//출발표를 보여준다.
+			break;
+		case 2:
+			card.show(tables, "ar");//도착표를 보여준다.
+			break;
+		}
+	}
+	
+	public JTable getDepartureTable() {
+		return departureTable;
+	}
+
+	public JTable getArrivalTable() {
+		return arrivalTable;
+	}
+
+	public JButton getDepartureBtn() {
+		return departureBtn;
+	}
+
+	public JButton getArrivalBtn() {
+		return arrivalBtn;
+	}
+
+	public JButton getMenuBtn() {
+		return menuBtn;
+	}
+	
 }
