@@ -8,31 +8,29 @@ import java.awt.*;
 /**
  * 
  */
-public class FindPath implements Strategy {
+public class FindPath implements FindPathStrategy {
 	
     /**
      * Default constructor
      */
 	
-	private static ArrayList<A_Data> OpenList = new ArrayList<A_Data>();
-	private static ArrayList<A_Data> CloseList = new ArrayList<A_Data>();
-	private static ArrayList<int[]> Path = new ArrayList<int[]>(); //마지막에 경로를 저장할 곳이다.
+	private ArrayList<A_Data> OpenList = new ArrayList<A_Data>();
+	private ArrayList<A_Data> CloseList = new ArrayList<A_Data>();
+	private ArrayList<Point> Path = new ArrayList<>(); //마지막에 경로를 저장할 곳이다.
 	
     public FindPath() {
-    	System.out.println("error_test");	// 게이트 정보가 안들어올 경우.
     	
     }
-    
-    public FindPath(String gate_num) {
+
+    public ArrayList<Point> findPath(int gate_num) {
     	// Map 불러오기
-//    	Map airportMap = new Map();	//그냥 static으로 함.
-//    	map=airportMap.getMap();
+    	Map airportMap = Map.getInstance();
     	
-    	int startx = Map.getRobot().getX();
-    	int starty = Map.getRobot().getY();
+    	int startx = airportMap.getRobot().getX();
+    	int starty = airportMap.getRobot().getY();
     	
-    	int endx = Map.getGateLocation(Integer.parseInt(gate_num)).getX();
-    	int endy = Map.getGateLocation(Integer.parseInt(gate_num)).getY();
+    	int endx = airportMap.getGateLocation(gate_num - 1).getX();
+    	int endy = airportMap.getGateLocation(gate_num - 1).getY();
     	
     	int nowIndex = 0;
     	CloseList.add(new A_Data(startx, starty, -1, 0, 0)); //시작지점을 바로 탐색할 수 있도록 CloseList에 미리 넣어준다.
@@ -92,29 +90,18 @@ public class FindPath implements Strategy {
     	}
     	
     	while (nowIndex != -1) { // 도착지점부터 역순으로 되짚어간다
-    		int[] pathtemp = { CloseList.get(nowIndex).x, CloseList.get(nowIndex).y };
-    		Path.add(pathtemp);// + " " + CloseList.get(nowIndex).y);
+    		Point path_point = new Point(CloseList.get(nowIndex).x, CloseList.get(nowIndex).y);
+    		Path.add(path_point);// + " " + CloseList.get(nowIndex).y);
     		nowIndex = CloseList.get(nowIndex).p_index;
     	}
     	
-    	while (Path.size() != 0) { // 되짚어간 경로를 다시 원래대로 출력한다.
-    		// 여기서 Handler를 써서 넘어갈것. GUI처리 필요.
-    		
-    		System.out.println(Path.get(Path.size() - 1)[0] + " " + Path.get(Path.size() - 1)[1]);
-    		Path.remove(Path.size() - 1);
-    	}
-    }
-
-
-
-    /**
-     * @return
-     */
-    public Vector<Point> findPath() {
-        // TODO implement here
-    	
-    	//이거 어따씀
-        return null;
+//    	while (Path.size() != 0) { // 되짚어간 경로를 다시 원래대로 출력한다.
+//    		// 여기서 Handler를 써서 넘어갈것. GUI처리 필요.
+//    		
+//    		System.out.println(Path.get(Path.size() - 1)[0] + " " + Path.get(Path.size() - 1)[1]);
+//    		Path.remove(Path.size() - 1);
+//    	}
+        return Path;
     }
 
 }

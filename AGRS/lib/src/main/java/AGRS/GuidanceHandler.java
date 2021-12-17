@@ -9,10 +9,12 @@ import java.awt.*;
  */
 public class GuidanceHandler {
 
+	private Map airport_map;
     /**
      * Default constructor
      */
     public GuidanceHandler() {
+    	airport_map = Map.getInstance();
     }
 
     /**
