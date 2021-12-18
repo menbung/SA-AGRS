@@ -24,7 +24,7 @@ public class FlightInfoHandler {
     	init();
     }
     
-    void updateView() {//GUI¿¡ ¸®½ºÆ® ¾÷µ¥ÀÌÆ®
+    void updateView() {//GUIï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     	flight_model.getFlightInfos("2021_12_09");
     	flight_info_gui.updateDeparture(flight_model.getDeparture_flights());
     	flight_info_gui.updateArrive(flight_model.getArrive_flights());
@@ -39,8 +39,7 @@ public class FlightInfoHandler {
 				flight_model.setTarget_info(1, index);
 				int gateNum = flight_model.getTarget_info().getGate_num();
 				
-				GuidanceGUI guidancegui = new GuidanceGUI(gateNum);
-				guidancegui.setVisible(true);
+				new GuidanceHandler(gateNum);
 				flight_info_gui.setVisible(false);
 			}
 		});
@@ -53,15 +52,14 @@ public class FlightInfoHandler {
 				flight_model.setTarget_info(2, index);
 				int gateNum = flight_model.getTarget_info().getGate_num();
 				
-				GuidanceGUI guidancegui = new GuidanceGUI(gateNum);
-				guidancegui.setVisible(true);
+				new GuidanceHandler(gateNum);
 				flight_info_gui.setVisible(false);
 			}
 		});
     }
 
     void init() {
-    	JButton departureBtn = flight_info_gui.getDepartureBtn();//Ãâ¹ßÇ¥ º¸´Â ¹öÆ°
+    	JButton departureBtn = flight_info_gui.getDepartureBtn();//ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     	departureBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -69,7 +67,7 @@ public class FlightInfoHandler {
 			}
 		});
     	
-    	JButton arrivalBtn = flight_info_gui.getArrivalBtn();//µµÂøÇ¥¸¦ º¸´Â ¹öÆ°
+    	JButton arrivalBtn = flight_info_gui.getArrivalBtn();//ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     	arrivalBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -77,11 +75,11 @@ public class FlightInfoHandler {
 			}
 		});
     	
-    	JButton menuBtn = flight_info_gui.getMenuBtn();//¸Þ´ºÈ­¸éÀ¸·Î µ¹¾Æ°¡´Â ¹öÆ°
+    	JButton menuBtn = flight_info_gui.getMenuBtn();//ï¿½Þ´ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
     	menuBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//menu¹öÆ° Å¬¸¯½Ã
+				//menuï¿½ï¿½Æ° Å¬ï¿½ï¿½ï¿½ï¿½
 				MainGUI maingui = new MainGUI();
 				maingui.setVisible(true);
 				flight_info_gui.setVisible(false);

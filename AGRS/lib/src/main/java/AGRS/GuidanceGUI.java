@@ -1,6 +1,7 @@
 package AGRS;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -17,26 +18,26 @@ public class GuidanceGUI extends JFrame {
 	private JLayeredPane layeredPane;
 	
 	/**
-	 * Å×½ºÆ®¿ë
+	 * ï¿½×½ï¿½Æ®ï¿½ï¿½
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuidanceGUI frame = new GuidanceGUI(2);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuidanceGUI frame = new GuidanceGUI(2);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
 	
-	public GuidanceGUI(int gateNum) {
+	public GuidanceGUI(Point myPoint,Point endPoint, ArrayList<Point> path) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 960, 540);
 		contentPane = new JPanel();
@@ -45,18 +46,18 @@ public class GuidanceGUI extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		
-		//À§¿¡ ¸Þ¼¼Áö Ãâ·ÂºÎ
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½Âºï¿½
 		JPanel titlePanel = new JPanel();
 		contentPane.add(titlePanel, BorderLayout.NORTH);
 
 		msg="\uAE38\uC744 \uC548\uB0B4 \uC911 \uC785\uB2C8\uB2E4...";
 		
 		JLabel titleLabel = new JLabel(msg);
-		titleLabel.setFont(new Font("±¼¸²", Font.PLAIN, 18));
+		titleLabel.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.PLAIN, 18));
 		titlePanel.add(titleLabel);
 		
 		
-		// ¸ÊÃâ·ÂºÎ
+		// ï¿½ï¿½ï¿½ï¿½Âºï¿½
 //		JPanel mapPanel = new JPanel();
 //		mapPanel.setBorder(new EmptyBorder(8, 0, 0, 0));
 ////		mapPanel.setLayout(null);
@@ -72,13 +73,13 @@ public class GuidanceGUI extends JFrame {
 		Goal.setEnabled(false);
 		Goal.setForeground(Color.BLACK);
 		layeredPane.setLayer(Goal, 100);
-		Goal.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		Goal.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 14));
 		Goal.setBackground(Color.GREEN);
-		Goal.setBounds(-12, -12, 48, 48);
+		Goal.setBounds(76*endPoint.getX()-12,72*endPoint.getY()-12, 48, 48);
 		layeredPane.add(Goal);
 		
 		
-		tableMap = new JTable(6,12);
+		tableMap = new JTable(7,13);
 		tableMap.setEnabled(false);
 		tableMap.setRowSelectionAllowed(false);
 		tableMap.setBounds(12, 12, 912, 432);
@@ -87,44 +88,42 @@ public class GuidanceGUI extends JFrame {
 		
 		JButton Robot = new JButton("R");
 		
-		// Å×½ºÆ®¿ë
-		Robot.addMouseListener(new MouseAdapter() {		//ÀÓ½Ã Å×½ºÆ®¿ë R Å¬¸¯ÇßÀ»¶§ ¸®ÆäÀÎÆ® µÇ´ÂÁö È®ÀÎ¿ë.
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Point p1 = new Point(3, 4);
-				Point p2 = new Point(3, 3);
-				makeRouteY(p1, p2);
-				System.out.println(RouteList.get(0).getX());
-				printRoute();
-				
-			}
-		});
-		Robot.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		// ï¿½×½ï¿½Æ®ï¿½ï¿½
+//		Robot.addMouseListener(new MouseAdapter() {		//ï¿½Ó½ï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½ R Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ç´ï¿½ï¿½ï¿½ È®ï¿½Î¿ï¿½.
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				Point p1 = new Point(3, 4);
+//				Point p2 = new Point(3, 3);
+//				makeRouteY(p1, p2);
+//				System.out.println(RouteList.get(0).getX());
+//				printRoute();
+//				
+//			}
+//		});
+		Robot.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 14));
 		layeredPane.setLayer(Robot, 101);
 		Robot.setBackground(Color.RED);
-		Robot.setBounds(672,204,48,48);
+		Robot.setBounds(76*myPoint.getX()-12,72*myPoint.getY()-12,48,48);
 		layeredPane.add(Robot);
 		
-//		JPanel RouteX = new JPanel();	// Å©±â Å×½ºÆ®¿ë
-//		layeredPane.setLayer(RouteX, 1);
-//		RouteX.setBackground(Color.RED);
-//		RouteX.setBounds(236, 152, 84, 8);
-//		layeredPane.add(RouteX);
-//		
-//		JPanel RouteY = new JPanel();
-//		RouteY.setBackground(Color.RED);
-//		layeredPane.setLayer(RouteY, 1);
-//		RouteY.setBounds(312, 152, 8, 80);
-//		layeredPane.add(RouteY);
-		
-		//±æÃ£±â ½Ã¹Ä·¹ÀÌ¼ÇºÎ
+		//ï¿½ï¿½Ã£ï¿½ï¿½ ï¿½Ã¹Ä·ï¿½ï¿½Ì¼Çºï¿½
 		RouteList = new Vector<JPanel>();
-		
+		for(int i=0;i<path.size()-1;i++) {
+	         if(path.get(i).getX()==path.get(i+1).getX()) {   //yï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	            makeRouteY(path.get(i),path.get(i+1));
+	         }else if(path.get(i).getY()==path.get(i+1).getY()) {   //xï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	            makeRouteX(path.get(i),path.get(i+1));
+	         }else {
+	            System.out.println("error");
+	         }
+	         layeredPane.setLayer(RouteList.elementAt(i), 10);
+	         layeredPane.add(RouteList.elementAt(i));
+	    }
 		
 		
 	}
 	
-//	public void makeRoute() {	// ÀÌ°Ç ÇÚµé·¯¿¡¼­ ÇØ¾ßÇÒ°Í °°¾Æ¼­ ÀÓ½Ã·Î ÁÖ¼®Ã³¸®.
+//	public void makeRoute() {	// ï¿½Ì°ï¿½ ï¿½Úµé·¯ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½Ò°ï¿½ ï¿½ï¿½ï¿½Æ¼ï¿½ ï¿½Ó½Ã·ï¿½ ï¿½Ö¼ï¿½Ã³ï¿½ï¿½.
 //		if() {
 //			
 //		}else if(){
@@ -139,7 +138,7 @@ public class GuidanceGUI extends JFrame {
 //	}
 	
 	
-	public void makeRouteX(Point previous, Point current){	//xÃà ·çÆ® ¸·´ë±â »ý¼º¿ë
+	public void makeRouteX(Point previous, Point current){	//xï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(previous.getX()<current.getX()) {
 			JPanel RouteX = new JPanel();
 			RouteX.setBackground(Color.RED);
@@ -158,7 +157,7 @@ public class GuidanceGUI extends JFrame {
 	
 	
 	
-	public void makeRouteY(Point previous, Point current) {	//yÃà ·çÆ® ¸·´ë±â »ý¼º¿ë
+	public void makeRouteY(Point previous, Point current) {	//yï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(previous.getY()<current.getY()) {
 			JPanel RouteY = new JPanel();
 			RouteY.setBackground(Color.RED);
@@ -176,15 +175,15 @@ public class GuidanceGUI extends JFrame {
 	}
 	
 	
-	public void printRoute() {	//·çÆ® all print
-		for(int i=0; i<RouteList.size();i++) {
-			layeredPane.setLayer(RouteList.elementAt(i), 10);
-			contentPane.revalidate();
-			contentPane.repaint();
-//			layeredPane.revalidate();
-//			layeredPane.repaint();
-		}
-	}
+//	public void printRoute() {	//ï¿½ï¿½Æ® all print
+//		for(int i=0; i<RouteList.size();i++) {
+//			layeredPane.setLayer(RouteList.elementAt(i), 10);
+//			contentPane.revalidate();
+//			contentPane.repaint();
+////			layeredPane.revalidate();
+////			layeredPane.repaint();
+//		}
+//	}
 
 	
 	

@@ -41,10 +41,10 @@ public class Map {
 //    			));
     	
     	map=new Vector<Vector<Integer>>();
-    	for(int row=0; row<mapSizeW; row++) {
+    	for(int row=0; row<mapSizeH; row++) {
     		Vector<Integer> row_vec = new Vector<Integer>();
-    		for(int col=0; col<mapSizeH; col++) {
-    			if(row == 0 || row == mapSizeW-1 || col == 0 || col == mapSizeH-1)
+    		for(int col=0; col<mapSizeW; col++) {
+    			if(row == 0 || row == mapSizeH-1 || col == 0 || col == mapSizeW-1)
     				row_vec.add(1);
     			else
     				row_vec.add(0);
@@ -53,14 +53,14 @@ public class Map {
     	}
     	
     	
-    	gate_location.add(new Point(3,0));	//1¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(6,0));	//2¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(9,0));	//3¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(3,6));	//4¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(6,6));	//5¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(9,6));	//6¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(0,3));	//7¹ø °ÔÀÌÆ®
-    	gate_location.add(new Point(12,3));	//8¹ø °ÔÀÌÆ®
+    	gate_location.add(new Point(3,0));	//1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(6,0));	//2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(9,0));	//3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(3,6));	//4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(6,6));	//5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(9,6));	//6ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(0,3));	//7ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    	gate_location.add(new Point(12,3));	//8ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     	
     }
 
@@ -87,7 +87,7 @@ public class Map {
     }
 
     
-  //row = ¼¼·Î = height , col = °¡·Î = width, row-col ¼øÀÇ ÀÔ·Â= ¼¼·Î¸ÕÀú ÀÔ·ÂÇÒ°Í
+  //row = ï¿½ï¿½ï¿½ï¿½ = height , col = ï¿½ï¿½ï¿½ï¿½ = width, row-col ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½= ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ò°ï¿½
 	public int get(int row, int col) {
 		// TODO Auto-generated method stub
 		return map.get(row).get(col);
@@ -95,14 +95,14 @@ public class Map {
 	}
 	
 	public Point getGateLocation(int gate_num) {
-		return gate_location.get(gate_num);
+		return gate_location.get(gate_num-1);
 	}
 	
 	
 	public Point getRobot() {
 		return robot;
 	}
-	
+
 	
 }
 
