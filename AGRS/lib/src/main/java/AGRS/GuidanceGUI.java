@@ -79,7 +79,7 @@ public class GuidanceGUI extends JFrame {
 		layeredPane.add(Goal);
 		
 		
-		tableMap = new JTable(7,13);
+		tableMap = new JTable(6,12);
 		tableMap.setEnabled(false);
 		tableMap.setRowSelectionAllowed(false);
 		tableMap.setBounds(12, 12, 912, 432);
@@ -161,12 +161,12 @@ public class GuidanceGUI extends JFrame {
 		if(previous.getY()<current.getY()) {
 			JPanel RouteY = new JPanel();
 			RouteY.setBackground(Color.RED);
-			RouteY.setBounds(76*previous.getY()+8, 72*previous.getY()+8, 8, 84);
+			RouteY.setBounds(76*previous.getX()+8, 72*previous.getY()+8, 8, 84);
 			RouteList.add(RouteY);
 		}else if(previous.getY()>current.getY()){
 			JPanel RouteY = new JPanel();
 			RouteY.setBackground(Color.RED);
-			RouteY.setBounds(76*current.getY()+8, 72*current.getY()+8, 8, 84);
+			RouteY.setBounds(76*current.getX()+8, 72*current.getY()+8, 8, 84);
 			RouteList.add(RouteY);
 			
 		}else {

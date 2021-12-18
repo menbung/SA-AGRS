@@ -24,18 +24,18 @@ import javax.swing.JScrollPane;
 public class FlightinfoGUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTable departureTable;	// Ãâ¹ßÇ×°øÇ¥
-	private JTable arrivalTable;	// µµÂøÇ×°øÇ¥
-	private JButton departureBtn;	// Ãâ¹ß¸®½ºÆ® º¸´Â ¹öÆ°
-	private JButton arrivalBtn;		// µµÂø¸®½ºÆ® º¸´Â ¹öÆ°
-	private JButton menuBtn;		// ¸Þ´ºÈ­¸éÀ¸·Î °¡´Â ¹öÆ°
-	private DefaultTableModel departure_model;	//Ãâ¹ß¸®½ºÆ®
-	private DefaultTableModel arrive_model;		//µµÂø¸®½ºÆ®
-	private JPanel tables;			//¸®½ºÆ® Ãâ·Â ÆÐ³Î
-	private CardLayout card;		//ÆÐ³Î °ü¸®
+	private JTable departureTable;	// ï¿½ï¿½ï¿½ï¿½×°ï¿½Ç¥
+	private JTable arrivalTable;	// ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½Ç¥
+	private JButton departureBtn;	// ï¿½ï¿½ß¸ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+	private JButton arrivalBtn;		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+	private JButton menuBtn;		// ï¿½Þ´ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+	private DefaultTableModel departure_model;	//ï¿½ï¿½ß¸ï¿½ï¿½ï¿½Æ®
+	private DefaultTableModel arrive_model;		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	private JPanel tables;			//ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½
+	private CardLayout card;		//ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½
 	
 	public FlightinfoGUI() {
-		//ÆÐ³Î »ý¼º ¹× µðÀÚÀÎ °ü·Ã
+		//ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 960, 540);
 		contentPane = new JPanel();
@@ -46,9 +46,9 @@ public class FlightinfoGUI extends JFrame {
 		JPanel titlePanel = new JPanel();
 		contentPane.add(titlePanel, BorderLayout.NORTH);
 		
-		// Å¸ÀÌÆ²
+		// Å¸ï¿½ï¿½Æ²
 		JLabel titlelabel = new JLabel("<< \uD56D\uACF5\uD3B8 \uC548\uB0B4 >>");
-		titlelabel.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		titlelabel.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 20));
 		titlePanel.add(titlelabel);
 		
 		
@@ -56,7 +56,7 @@ public class FlightinfoGUI extends JFrame {
 		contentPane.add(tablePanel, BorderLayout.CENTER);
 		tablePanel.setLayout(new BorderLayout(0, 0));
 		
-		//Å×ÀÌºí
+		//ï¿½ï¿½ï¿½Ìºï¿½
 
 		tables = new JPanel();
 		tablePanel.add(tables, BorderLayout.CENTER);
@@ -64,21 +64,25 @@ public class FlightinfoGUI extends JFrame {
 		tables.setLayout(card);
 		
 		
-		// Å×ÀÌºí »ý¼º Ãâ·ÂºÎ
-		String[] dep_colTitle= new String[]{"Ãâ¹ß½Ã°£", "µµÂøÁö", "Ç×°øÆí", "Ç×°ø»ç", "°ÔÀÌÆ®"};//Ãâ·Â°ª Á¾·ù
+		// ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Âºï¿½
+		String[] dep_colTitle= new String[]{
+				"\uCD9C\uBC1C\uC2DC\uAC04", "\uB3C4\uCC29\uC9C0", "\uD56D\uACF5\uD3B8",
+				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};//ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
 		departure_model = new DefaultTableModel(dep_colTitle, 0);
 		departureTable = new JTable(departure_model);
 		JScrollPane dep_scroll = new JScrollPane(departureTable);
 		tables.add("dep", dep_scroll);
 		
-		String[] ar_colTitle= new String[]{"µµÂø½Ã°£", "Ãâ¹ßÁö", "Ç×°øÆí", "Ç×°ø»ç", "ÀÔ±¹Àå Ãâ±¸"};//Ãâ·Â°ª Á¾·ù
+		String[] ar_colTitle= new String[]{
+				"\uB3C4\uCC29\uC2DC\uAC04", "\uCD9C\uBC1C\uC9C0", "\uD56D\uACF5\uD3B8",
+				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};//ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
 		arrive_model = new DefaultTableModel(ar_colTitle, 0);
 		arrivalTable = new JTable(arrive_model);
 		JScrollPane ar_scroll = new JScrollPane(arrivalTable);
 		tables.add("ar", ar_scroll);
 		
 		
-		// ¹öÆ°ºÎ
+		// ï¿½ï¿½Æ°ï¿½ï¿½
 		JPanel tableBtns = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) tableBtns.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -86,20 +90,20 @@ public class FlightinfoGUI extends JFrame {
 		flowLayout.setHgap(0);
 		tablePanel.add(tableBtns, BorderLayout.NORTH);
 		
-		departureBtn = new JButton("\uCD9C\uBC1C");	//Ãâ¹ßÇ¥ º¸´Â ¹öÆ°
-		departureBtn.setFont(new Font("±¼¸²", Font.ITALIC, 16));
+		departureBtn = new JButton("\uCD9C\uBC1C");	//ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+		departureBtn.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.ITALIC, 16));
 		tableBtns.add(departureBtn);
 		
-		arrivalBtn = new JButton("\uB3C4\uCC29");	//µµÂøÇ¥ º¸´Â ¹öÆ°
-		arrivalBtn.setFont(new Font("±¼¸²", Font.ITALIC, 16));
+		arrivalBtn = new JButton("\uB3C4\uCC29");	//ï¿½ï¿½ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+		arrivalBtn.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.ITALIC, 16));
 		tableBtns.add(arrivalBtn);
 		
 		
 		JPanel btnPanel = new JPanel();
 		contentPane.add(btnPanel, BorderLayout.SOUTH);
 		
-		menuBtn = new JButton("MENU");				//¸Þ´ºÈ­¸éÀ¸·Î µ¹¾Æ°¡´Â ¹öÆ°
-		menuBtn.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		menuBtn = new JButton("MENU");				//ï¿½Þ´ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+		menuBtn.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 20));
 		btnPanel.add(menuBtn);
 	}
 
@@ -130,10 +134,10 @@ public class FlightinfoGUI extends JFrame {
 	public void showFlightList(int code) {
 		switch(code) {
 		case 1:
-			card.show(tables, "dep");//Ãâ¹ßÇ¥¸¦ º¸¿©ÁØ´Ù.
+			card.show(tables, "dep");//ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 			break;
 		case 2:
-			card.show(tables, "ar");//µµÂøÇ¥¸¦ º¸¿©ÁØ´Ù.
+			card.show(tables, "ar");//ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 			break;
 		}
 	}
