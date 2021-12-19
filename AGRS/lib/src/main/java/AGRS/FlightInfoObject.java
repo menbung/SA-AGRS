@@ -1,13 +1,13 @@
 package AGRS;
 
 public class FlightInfoObject implements Comparable<FlightInfoObject>{
-	private String departure_time;
-	private String arrive_time;
-	private String airline;
-	private String flight_num;
-	private String starting_point;
-	private String destination;
-	private int gate_num;
+	private String departure_time;//출발시간
+	private String arrive_time;//도착시간
+	private String airline;//항공사
+	private String flight_num;//항공편번호
+	private String starting_point;//출발지
+	private String destination;//도착지
+	private int gate_num;//게이트번호
 	
 	public FlightInfoObject() {
 		this.departure_time = "";

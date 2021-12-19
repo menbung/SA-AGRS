@@ -14,18 +14,18 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
 public class ServerAdapter implements ServerTarget{
-	private static ServerAdapter instance = new ServerAdapter();//½Ì±ÛÅæ »ç¿ëÀ» À§ÇÑ º¯¼ö
+	private static ServerAdapter instance = new ServerAdapter();//ì‹±ê¸€í†¤ íŒ¨í„´ì„ ìœ„í•œ ë³€ìˆ˜
 	private Firestore db;
 	
-	private ServerAdapter() {//¿ÜºÎ¿¡¼­ Ãß°¡ »ı¼ºÇÏ´Â°É ¸·±âÀ§ÇÑ private
+	private ServerAdapter() {//ì¶”ê°€ ìƒì„±ì„ ë§‰ê¸° ìœ„í•œ private
 		initialize();
 	}
 	
-	public static ServerAdapter getInstance() {//½Ì±ÛÅæÀ» À§ÇÑ ÀÎ½ºÅÏ½º ¹İÈ¯ ÇÔ¼ö
+	public static ServerAdapter getInstance() {//ì‹±ê¸€í†¤ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ ë°˜í™˜ í•¨ìˆ˜
 		return instance;
 	}
 	
-	public void initialize() {
+	public void initialize() {//firebase DBì— ì¸ì¦ ë° ì—°ê²°
 		try {
 			FileInputStream accountPath =
 					new FileInputStream("src/main/resources/sa-airportserver-firebase-adminsdk-h57g4-c032473b32.json");
@@ -36,7 +36,6 @@ public class ServerAdapter implements ServerTarget{
 			db = FirestoreClient.getFirestore();
 		}catch(Exception e) {
 			e.printStackTrace();
-			//System.out.println("¼­¹ö Á¢¼Ó ¿À·ù");
 		}
 	}
 	
@@ -52,6 +51,7 @@ public class ServerAdapter implements ServerTarget{
 		}
 	}
 	
+	//ì„œë²„ì— ì €ì¥ëœ í•­ê³µí¸ ë¦¬ìŠ¤íŠ¸ ì¤‘ date ë‚ ì§œì— ì €ì¥ëœ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	public ArrayList<FlightInfoObject> flightInfoReq(String date) {
 		ArrayList<FlightInfoObject> info_list = new ArrayList<>();
 		try {
@@ -69,6 +69,7 @@ public class ServerAdapter implements ServerTarget{
 		return info_list;
 	}
 	
+	//ì„œë²„ì— ì €ì¥ëœ ë§µ ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	public int[] mapReq(){
 		int[] map_size = new int[2];
 		try {

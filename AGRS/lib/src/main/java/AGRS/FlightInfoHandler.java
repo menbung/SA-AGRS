@@ -7,8 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 
 public class FlightInfoHandler {
-	private FlightinfoGUI flight_info_gui;
-	private FlightInfo flight_model;
+	private FlightinfoGUI flight_info_gui; //view
+	private FlightInfo flight_model; //model
 	
 	public FlightInfoHandler() {
 		this(true);
@@ -24,13 +24,13 @@ public class FlightInfoHandler {
     	init();
     }
     
-    void updateView() {//GUI�� ����Ʈ ������Ʈ
+    void updateView() {//view에 리스트 업데이트
     	flight_model.getFlightInfos("2021_12_09");
     	flight_info_gui.updateDeparture(flight_model.getDeparture_flights());
     	flight_info_gui.updateArrive(flight_model.getArrive_flights());
     }
     
-    void connectTable() {
+    void connectTable() {//리스트에 항공편 클릭 리스터 연결
     	JTable departureTable = flight_info_gui.getDepartureTable();
     	departureTable.addMouseListener(new MouseAdapter() {
 			@Override
@@ -40,7 +40,7 @@ public class FlightInfoHandler {
 				int gateNum = flight_model.getTarget_info().getGate_num();
 				
 				new GuidanceHandler(gateNum);
-				flight_info_gui.setVisible(false);
+				flight_info_gui.dispose();
 			}
 		});
     	
@@ -49,17 +49,17 @@ public class FlightInfoHandler {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int index = arrivalTable.getSelectedRow();
-				flight_model.setTarget_info(2, index);
+				flight_model.setTarget_info(2, 1);
 				int gateNum = flight_model.getTarget_info().getGate_num();
 				
 				new GuidanceHandler(gateNum);
-				flight_info_gui.setVisible(false);
+				flight_info_gui.dispose();
 			}
 		});
     }
 
     void init() {
-    	JButton departureBtn = flight_info_gui.getDepartureBtn();//���ǥ ���� ��ư
+    	JButton departureBtn = flight_info_gui.getDepartureBtn();//출발버튼 리스너 연결
     	departureBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -67,7 +67,7 @@ public class FlightInfoHandler {
 			}
 		});
     	
-    	JButton arrivalBtn = flight_info_gui.getArrivalBtn();//����ǥ�� ���� ��ư
+    	JButton arrivalBtn = flight_info_gui.getArrivalBtn();//도착버튼 리스너 연결
     	arrivalBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -75,14 +75,12 @@ public class FlightInfoHandler {
 			}
 		});
     	
-    	JButton menuBtn = flight_info_gui.getMenuBtn();//�޴�ȭ������ ���ư��� ��ư
+    	JButton menuBtn = flight_info_gui.getMenuBtn();//메뉴버튼 리스너 연결
     	menuBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//menu��ư Ŭ����
-				MainGUI maingui = new MainGUI();
-				maingui.setVisible(true);
-				flight_info_gui.setVisible(false);
+				new MainGUI();
+				flight_info_gui.dispose();
 			}
 		});
     }

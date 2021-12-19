@@ -20,11 +20,6 @@ import java.awt.event.MouseEvent;
 public class MainGUI extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-
 	/**
 	 * Create the frame.
 	 */
@@ -40,7 +35,7 @@ public class MainGUI extends JFrame {
 		contentPane.add(titlePanel, BorderLayout.NORTH);
 		
 		JLabel titleLabel = new JLabel("AGRS");
-		titleLabel.setFont(new Font("±¼¸²", Font.BOLD, 42));
+		titleLabel.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 42));
 		titlePanel.add(titleLabel);
 		
 		JPanel btnPanel = new JPanel();
@@ -52,15 +47,15 @@ public class MainGUI extends JFrame {
 		gbl_btnPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		btnPanel.setLayout(gbl_btnPanel);
 		
-		JButton btn1 = new JButton("\uD56D\uACF5\uD3B8 \uC815\uBCF4\uC548\uB0B4");//Ç×°øÆí Á¤º¸ ¹öÆ°
+		JButton btn1 = new JButton("\uD56D\uACF5\uD3B8 \uC815\uBCF4\uC548\uB0B4");//ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
 		btn1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new FlightInfoHandler(false);
-				setVisible(false);
+				dispose();
 			}
 		});
-		btn1.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		btn1.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 20));
 
 		GridBagConstraints gbc_btn1 = new GridBagConstraints();
 		gbc_btn1.fill = GridBagConstraints.BOTH;
@@ -69,21 +64,23 @@ public class MainGUI extends JFrame {
 		gbc_btn1.gridy = 0;
 		btnPanel.add(btn1, gbc_btn1);
 		
-		JButton btn2 = new JButton("\uACF5\uD56D \uAE38 \uC548\uB0B4");//±æ ¾È³» ¹öÆ°
+		JButton btn2 = new JButton("\uACF5\uD56D \uAE38 \uC548\uB0B4");//ï¿½ï¿½ ï¿½È³ï¿½ ï¿½ï¿½Æ°
 		btn2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new FlightInfoHandler(true);
-				setVisible(false);
+				dispose();
 			}
 		});
-		btn2.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		btn2.setFont(new Font("ï¿½ï¿½ï¿½ï¿½", Font.BOLD, 20));
 		GridBagConstraints gbc_btn2 = new GridBagConstraints();
 		gbc_btn2.insets = new Insets(10, 360, 10, 360);
 		gbc_btn2.fill = GridBagConstraints.BOTH;
 		gbc_btn2.gridx = 0;
 		gbc_btn2.gridy = 1;
 		btnPanel.add(btn2, gbc_btn2);
+		
+		setVisible(true);
 	}
 
 }

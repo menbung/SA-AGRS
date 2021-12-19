@@ -16,22 +16,9 @@ public class GuidanceGUI extends JFrame {
 	private String msg;
 	private Vector<JPanel> RouteList;
 	private JLayeredPane layeredPane;
-	
-	/**
-	 * �׽�Ʈ��
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuidanceGUI frame = new GuidanceGUI(2);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	private JButton Robot = new JButton("R");
+	private JButton menu_btn;
+	private JLabel titleLabel;
 
 	/**
 	 * Create the frame.
@@ -46,39 +33,37 @@ public class GuidanceGUI extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		
-		//���� �޼��� ��º�
+		//상단 메세지
 		JPanel titlePanel = new JPanel();
 		contentPane.add(titlePanel, BorderLayout.NORTH);
 
 		msg="\uAE38\uC744 \uC548\uB0B4 \uC911 \uC785\uB2C8\uB2E4...";
 		
-		JLabel titleLabel = new JLabel(msg);
-		titleLabel.setFont(new Font("����", Font.PLAIN, 18));
+		titleLabel = new JLabel(msg);
+		titleLabel.setFont(new Font("굴림", Font.PLAIN, 18));
 		titlePanel.add(titleLabel);
 		
+		//메인화면으로 돌아가는 버튼
+		menu_btn = new JButton("\uC548\uB0B4 \uC885\uB8CC");
+		menu_btn.setFont(new Font("굴림", Font.BOLD, 18));
+		titlePanel.add(menu_btn);
 		
-		// ����º�
-//		JPanel mapPanel = new JPanel();
-//		mapPanel.setBorder(new EmptyBorder(8, 0, 0, 0));
-////		mapPanel.setLayout(null);
-//		contentPane.add(mapPanel, BorderLayout.CENTER);
-		
-		
-		
+		//가운데 화면
 		layeredPane = new JLayeredPane();
 		contentPane.add(layeredPane, BorderLayout.CENTER);
 		layeredPane.setLayout(null);
 		
+		//도착지 표시
 		JButton Goal = new JButton("G");
 		Goal.setEnabled(false);
 		Goal.setForeground(Color.BLACK);
 		layeredPane.setLayer(Goal, 100);
-		Goal.setFont(new Font("����", Font.BOLD, 14));
+		Goal.setFont(new Font("굴림", Font.BOLD, 14));
 		Goal.setBackground(Color.GREEN);
 		Goal.setBounds(76*endPoint.getX()-12,72*endPoint.getY()-12, 48, 48);
 		layeredPane.add(Goal);
 		
-		
+		//맵
 		tableMap = new JTable(6,12);
 		tableMap.setEnabled(false);
 		tableMap.setRowSelectionAllowed(false);
@@ -86,32 +71,19 @@ public class GuidanceGUI extends JFrame {
 		tableMap.setRowHeight(72);
 		layeredPane.add(tableMap);
 		
-		JButton Robot = new JButton("R");
-		
-		// �׽�Ʈ��
-//		Robot.addMouseListener(new MouseAdapter() {		//�ӽ� �׽�Ʈ�� R Ŭ�������� ������Ʈ �Ǵ��� Ȯ�ο�.
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				Point p1 = new Point(3, 4);
-//				Point p2 = new Point(3, 3);
-//				makeRouteY(p1, p2);
-//				System.out.println(RouteList.get(0).getX());
-//				printRoute();
-//				
-//			}
-//		});
-		Robot.setFont(new Font("����", Font.BOLD, 14));
+		//로봇 위치
+		Robot.setFont(new Font("굴림", Font.BOLD, 14));
 		layeredPane.setLayer(Robot, 101);
 		Robot.setBackground(Color.RED);
 		Robot.setBounds(76*myPoint.getX()-12,72*myPoint.getY()-12,48,48);
 		layeredPane.add(Robot);
 		
-		//��ã�� �ùķ��̼Ǻ�
+		//경로 출력
 		RouteList = new Vector<JPanel>();
 		for(int i=0;i<path.size()-1;i++) {
-	         if(path.get(i).getX()==path.get(i+1).getX()) {   //y�� �̵��� ���
+	         if(path.get(i).getX()==path.get(i+1).getX()) {   
 	            makeRouteY(path.get(i),path.get(i+1));
-	         }else if(path.get(i).getY()==path.get(i+1).getY()) {   //x�� �̵��� ���
+	         }else if(path.get(i).getY()==path.get(i+1).getY()) {   
 	            makeRouteX(path.get(i),path.get(i+1));
 	         }else {
 	            System.out.println("error");
@@ -120,25 +92,10 @@ public class GuidanceGUI extends JFrame {
 	         layeredPane.add(RouteList.elementAt(i));
 	    }
 		
-		
 	}
 	
-//	public void makeRoute() {	// �̰� �ڵ鷯���� �ؾ��Ұ� ���Ƽ� �ӽ÷� �ּ�ó��.
-//		if() {
-//			
-//		}else if(){
-//			
-//		}else if() {
-//			
-//		}else if(){
-//			
-//		}else {
-//			
-//		}
-//	}
 	
-	
-	public void makeRouteX(Point previous, Point current){	//x�� ��Ʈ ����� ������
+	public void makeRouteX(Point previous, Point current){	//x축 경로 추가
 		if(previous.getX()<current.getX()) {
 			JPanel RouteX = new JPanel();
 			RouteX.setBackground(Color.RED);
@@ -157,7 +114,7 @@ public class GuidanceGUI extends JFrame {
 	
 	
 	
-	public void makeRouteY(Point previous, Point current) {	//y�� ��Ʈ ����� ������
+	public void makeRouteY(Point previous, Point current) {	//y축 경로 추가
 		if(previous.getY()<current.getY()) {
 			JPanel RouteY = new JPanel();
 			RouteY.setBackground(Color.RED);
@@ -174,17 +131,20 @@ public class GuidanceGUI extends JFrame {
 		}
 	}
 	
-	
-//	public void printRoute() {	//��Ʈ all print
-//		for(int i=0; i<RouteList.size();i++) {
-//			layeredPane.setLayer(RouteList.elementAt(i), 10);
-//			contentPane.revalidate();
-//			contentPane.repaint();
-////			layeredPane.revalidate();
-////			layeredPane.repaint();
-//		}
-//	}
+	public void UpdateRoute(int x, int y, int i) {//로봇 이동 후 경로 갱신
+		RouteList.get(RouteList.size()-i-1).setVisible(false);
+		Robot.setBounds(x*76 - 12, 72*y - 12, 48, 48);
+		
+		layeredPane.revalidate();
+		layeredPane.repaint();
+	}
 
+	public void setTitleText(String text) {
+		this.titleLabel.setText(text);
+	}
 	
+	public JButton getMenuBtn() {
+		return this.menu_btn;
+	}
 	
 }

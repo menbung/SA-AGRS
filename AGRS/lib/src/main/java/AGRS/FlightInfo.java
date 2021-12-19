@@ -4,36 +4,38 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FlightInfo {
-	private static FlightInfo instance;//½Ì±ÛÅæ »ç¿ëÀ» À§ÇÑ º¯¼ö
+	private static FlightInfo instance;//for singleton pattern
 	private ServerTarget server;
-	private ArrayList<FlightInfoObject> departure_flights;
-	private ArrayList<FlightInfoObject> arrive_flights;
-	private FlightInfoObject target_info;//À¯Àú°¡ ¼±ÅÃÇÑ Ç×°øÆí Á¤º¸
+	private ArrayList<FlightInfoObject> departure_flights;//departure flight list
+	private ArrayList<FlightInfoObject> arrive_flights;//arrival flight list
+	private FlightInfoObject target_info;//flight information chosen by user
 
-	private FlightInfo() {//¿ÜºÎ¿¡¼­ Ãß°¡ »ı¼ºÇÏ´Â°É ¸·±âÀ§ÇÑ private
+	private FlightInfo() {//ì™¸ë¶€ì—ì„œ ì¶”ê°€ ìƒì„±í•˜ëŠ”ê±¸ ë§‰ëŠ” private
 		server = ServerAdapter.getInstance();
 		departure_flights = new ArrayList<>();
 		arrive_flights = new ArrayList<>();
 	}
 	
-	public static FlightInfo getInstance() {//½Ì±ÛÅæÀ» À§ÇÑ ÀÎ½ºÅÏ½º ¹İÈ¯ ÇÔ¼ö
-		if (instance == null) //ÃÖÃÊ ÇÑ¹ø¸¸ new ¿¬»êÀÚ¸¦ ÅëÇØ ¸Ş¸ğ¸®¿¡ ÇÒ´ç
+	public static FlightInfo getInstance() {//ì‹±ê¸€í†¤ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ ë°˜í™˜ í•¨ìˆ˜
+		if (instance == null)
 			instance = new FlightInfo();
 		return instance;
 	}
 	
-	public void getFlightInfos(String date) {
+	public void getFlightInfos(String date) {//ì„œë²„ì—ì„œ í•­ê³µí¸ ë¦¬ìŠ¤íŠ¸ë¥¼ ë°›ì•„ì™€ ê°€ê³µ ë° ì €ì¥
 		ArrayList<FlightInfoObject> flight_infos = server.flightInfoReq(date);
+		//ë¦¬ìŠ¤íŠ¸ í¬ë§·
 		departure_flights.clear();
 		arrive_flights.clear();
 		for (FlightInfoObject info : flight_infos) {
-			if (info.getArrive_time().equals("null")) {
+			if (info.getArrive_time().equals("null")) { //ì¶œë°œ í•­ê³µí¸ì¸ì§€ ë„ì°© í•­ê³µí¸ì¸ì§€ ë¶„ë¥˜
 				departure_flights.add(info);
 			}
 			else {
 				arrive_flights.add(info);
 			}
 		}
+		//í•­ê³µí¸ ì •ë ¬
 		Collections.sort(departure_flights);
 		Collections.sort(arrive_flights);
 	}
@@ -43,6 +45,7 @@ public class FlightInfo {
 	}
 
 	public void setTarget_info(int type, int index) {
+		//1ì´ë©´ ì¶œë°œ í•­ê³µí¸, 2ì´ë©´ ë„ì°© í•­ê³µí¸
 		switch(type) {
 		case 1:
 			this.target_info = this.departure_flights.get(index);

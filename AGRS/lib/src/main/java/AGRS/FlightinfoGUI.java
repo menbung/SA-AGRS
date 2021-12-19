@@ -24,18 +24,18 @@ import javax.swing.JScrollPane;
 public class FlightinfoGUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTable departureTable;	// ����װ�ǥ
-	private JTable arrivalTable;	// �����װ�ǥ
-	private JButton departureBtn;	// ��߸���Ʈ ���� ��ư
-	private JButton arrivalBtn;		// ��������Ʈ ���� ��ư
-	private JButton menuBtn;		// �޴�ȭ������ ���� ��ư
-	private DefaultTableModel departure_model;	//��߸���Ʈ
-	private DefaultTableModel arrive_model;		//��������Ʈ
-	private JPanel tables;			//����Ʈ ��� �г�
-	private CardLayout card;		//�г� ����
+	private JTable departureTable;	// 출발항공표
+	private JTable arrivalTable;	// 도착항공표
+	private JButton departureBtn;	// 춟발리스트보는버튼 
+	private JButton arrivalBtn;		// 도착리스트보는버튼
+	private JButton menuBtn;		// 메인화면으로가는버튼
+	private DefaultTableModel departure_model;	//출발항공표리스트
+	private DefaultTableModel arrive_model;		//도착항공표리스트
+	private JPanel tables;			//리스트 출력 패널
+	private CardLayout card;		//패널 관리
 	
 	public FlightinfoGUI() {
-		//�г� ���� �� ������ ����
+		//패널 생성 및 디자인 관련
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 960, 540);
 		contentPane = new JPanel();
@@ -46,7 +46,7 @@ public class FlightinfoGUI extends JFrame {
 		JPanel titlePanel = new JPanel();
 		contentPane.add(titlePanel, BorderLayout.NORTH);
 		
-		// Ÿ��Ʋ
+		// 테이블
 		JLabel titlelabel = new JLabel("<< \uD56D\uACF5\uD3B8 \uC548\uB0B4 >>");
 		titlelabel.setFont(new Font("����", Font.BOLD, 20));
 		titlePanel.add(titlelabel);
@@ -56,7 +56,7 @@ public class FlightinfoGUI extends JFrame {
 		contentPane.add(tablePanel, BorderLayout.CENTER);
 		tablePanel.setLayout(new BorderLayout(0, 0));
 		
-		//���̺�
+		//테이블 생성 출력부
 
 		tables = new JPanel();
 		tablePanel.add(tables, BorderLayout.CENTER);
@@ -64,25 +64,25 @@ public class FlightinfoGUI extends JFrame {
 		tables.setLayout(card);
 		
 		
-		// ���̺� ���� ��º�
+		// 출발 항공표 리스트 연결 및 출력
 		String[] dep_colTitle= new String[]{
 				"\uCD9C\uBC1C\uC2DC\uAC04", "\uB3C4\uCC29\uC9C0", "\uD56D\uACF5\uD3B8",
-				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};//��°� ����
+				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};
 		departure_model = new DefaultTableModel(dep_colTitle, 0);
 		departureTable = new JTable(departure_model);
 		JScrollPane dep_scroll = new JScrollPane(departureTable);
 		tables.add("dep", dep_scroll);
-		
+		// 도착 항공표 리스트 연결 및 출력
 		String[] ar_colTitle= new String[]{
 				"\uB3C4\uCC29\uC2DC\uAC04", "\uCD9C\uBC1C\uC9C0", "\uD56D\uACF5\uD3B8",
-				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};//��°� ����
+				"\uD56D\uACF5\uC0AC", "\uAC8C\uC774\uD2B8"};
 		arrive_model = new DefaultTableModel(ar_colTitle, 0);
 		arrivalTable = new JTable(arrive_model);
 		JScrollPane ar_scroll = new JScrollPane(arrivalTable);
 		tables.add("ar", ar_scroll);
 		
 		
-		// ��ư��
+		// 출발, 도착 버튼 추가
 		JPanel tableBtns = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) tableBtns.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -90,23 +90,24 @@ public class FlightinfoGUI extends JFrame {
 		flowLayout.setHgap(0);
 		tablePanel.add(tableBtns, BorderLayout.NORTH);
 		
-		departureBtn = new JButton("\uCD9C\uBC1C");	//���ǥ ���� ��ư
-		departureBtn.setFont(new Font("����", Font.ITALIC, 16));
+		departureBtn = new JButton("\uCD9C\uBC1C");	//출발버튼
+		departureBtn.setFont(new Font("굴림", Font.ITALIC, 16));
 		tableBtns.add(departureBtn);
 		
-		arrivalBtn = new JButton("\uB3C4\uCC29");	//����ǥ ���� ��ư
-		arrivalBtn.setFont(new Font("����", Font.ITALIC, 16));
+		arrivalBtn = new JButton("\uB3C4\uCC29");	//도착버튼
+		arrivalBtn.setFont(new Font("굴림", Font.ITALIC, 16));
 		tableBtns.add(arrivalBtn);
 		
 		
 		JPanel btnPanel = new JPanel();
 		contentPane.add(btnPanel, BorderLayout.SOUTH);
 		
-		menuBtn = new JButton("MENU");				//�޴�ȭ������ ���ư��� ��ư
-		menuBtn.setFont(new Font("����", Font.BOLD, 20));
+		menuBtn = new JButton("MENU");				// 메뉴 화면 버튼
+		menuBtn.setFont(new Font("굴림", Font.BOLD, 20));
 		btnPanel.add(menuBtn);
 	}
 
+	// 출발 항공편 리스트 추가
 	public void updateDeparture(ArrayList<FlightInfoObject> data) {
 		String[] row = new String[5];
 		for(FlightInfoObject info : data) {
@@ -119,6 +120,7 @@ public class FlightinfoGUI extends JFrame {
 		}
 	}
 	
+	//도착 항공편 리스트 추가
 	public void updateArrive(ArrayList<FlightInfoObject> data) {
 		String[] row = new String[5];
 		for(FlightInfoObject info : data) {
@@ -131,6 +133,7 @@ public class FlightinfoGUI extends JFrame {
 		}
 	}
 
+	// 출발항공편, 도착항공편 화면 전환
 	public void showFlightList(int code) {
 		switch(code) {
 		case 1:
